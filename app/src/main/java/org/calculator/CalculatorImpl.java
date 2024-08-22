@@ -5,6 +5,14 @@ import java.math.BigInteger;
 import java.math.RoundingMode;
 import java.util.concurrent.atomic.*;
 
+/**
+ * The CalculatorImpl class is an implementation of the {@link org.calculator.Calculator} interface. It uses BigDecimal
+ * as the underlying numeric data type, but accepts various Number types as parameters including AtomicInteger,
+ * AtomicLong, BigDecimal, BigInteger, Byte, Double, DoubleAccumulator, DoubleAdder, Float, Integer, Long,
+ * LongAccumulator, LongAdder, and Short. The Number parameters are converted to BigDecimal before applying arithmetic
+ * operations. The CalculatorImpl class does not support atomic functionality even if atomic Number types are
+ * passed as parameters.
+ */
 public class CalculatorImpl implements Calculator {
   private static final int SCALE_DEFAULT_VALUE = 10;
 
@@ -39,6 +47,10 @@ public class CalculatorImpl implements Calculator {
 
   @Override
   public BigDecimal calculate(Operation op, Number num1, Number num2) {
+    if (op == null) {
+      throw new NullPointerException("op must not be null.");
+    }
+
     BigDecimal bigDecimal1 = convertToBigDecimal(num1);
     BigDecimal bigDecimal2 = convertToBigDecimal(num2);
     return op.apply(bigDecimal1, bigDecimal2);
@@ -49,7 +61,7 @@ public class CalculatorImpl implements Calculator {
     return new CalculationImpl(num);
   }
 
-  private BigDecimal convertToBigDecimal(Number num) {
+  protected BigDecimal convertToBigDecimal(Number num) {
     if (num instanceof Long || num instanceof Integer || num instanceof Short || num instanceof Byte
         || num instanceof AtomicLong || num instanceof AtomicInteger || num instanceof LongAccumulator
         || num instanceof LongAdder) {

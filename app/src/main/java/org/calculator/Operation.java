@@ -4,6 +4,9 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.util.function.BiFunction;
 
+/**
+ * The Operation enum represents arithmetic operations.
+ */
 public enum Operation {
   ADD(BigDecimal::add),
   SUBTRACT(BigDecimal::subtract),

@@ -80,6 +80,11 @@ class CalculatorImplTest {
   }
 
   @Test()
+  void calculateWithNullOperation() {
+    assertThrows(NullPointerException.class, () -> calculator.calculate(null, 1, 1));
+  }
+
+  @Test()
   void calculateWithDivideByZero() {
     assertThrows(ArithmeticException.class, () -> calculator.calculate(Operation.DIVIDE, 1, 0));
   }
